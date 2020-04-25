@@ -24,6 +24,7 @@ public class ListenerClass implements Listener{
         Player attacker = (Player)event.getDamager();
         Player victim = (Player)event.getEntity();
         if (DataIssues.players.get(attacker.getUniqueId()).g_uid == DataIssues.players.get(victim.getUniqueId()).g_uid) {
+            attacker.sendMessage(ChatColor.RED + "Kendi grubundakilere saldıramazsın!");
             event.setCancelled(true);
             return;
         }

@@ -29,7 +29,7 @@ public class Main extends JavaPlugin {
         DataIssues.initalize();
         System.out.println("BasicGroup enabled!");
 
-        BukkitScheduler scheduler = getServer().getScheduler();
+        /*BukkitScheduler scheduler = getServer().getScheduler();
         task = scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
@@ -38,9 +38,18 @@ public class Main extends JavaPlugin {
                         DataIssues.players.put(p.getUniqueId(), new G_PlayerData(p.getUniqueId(), UUID.randomUUID(), null));
                         DataIssues.players.saveAndUnloadData(p.getUniqueId());
                     }
+                    DataIssues.players.saveData(p.getUniqueId());
                 }
             }
-        }, 5L, 5L);
+        }, 5L, 5L);*/
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!DataIssues.players.containsKey(p.getUniqueId())) {
+                DataIssues.players.put(p.getUniqueId(), new G_PlayerData(p.getUniqueId(), UUID.randomUUID(), null));
+                DataIssues.players.saveData(p.getUniqueId());
+            } else {
+                DataIssues.players.loadData(p.getUniqueId());
+            }
+        }
     }
 
     @Override
@@ -54,7 +63,7 @@ public class Main extends JavaPlugin {
         Player p;
         if(label.equalsIgnoreCase("grup")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.DARK_RED + "Bu komutu yalnızca oyuncular kullanabilir.");
+                sender.sendMessage(ChatColor.RED + "Bu komutu yalnızca oyuncular kullanabilir.");
                 return false;
             }
             
@@ -68,20 +77,20 @@ public class Main extends JavaPlugin {
                 }
                 if (args[0].equalsIgnoreCase("kur")) {
                     if (!DataIssues.hasGroup(p.getUniqueId())) {
-                        p.sendMessage("HataDenetim");
+                        
                         DataIssues.players.get(p.getUniqueId()).g_uid = p.getUniqueId();
-                        p.sendMessage("HataDenetim");
+                        
                         DataIssues.players.get(p.getUniqueId()).rank = "leader";
-                        p.sendMessage("HataDenetim");
+                        
                         p.sendMessage(ChatColor.AQUA + "Grup kuruldu!");
                         return true;
                     } else {
-                        p.sendMessage(ChatColor.DARK_RED + "Bir gruba mensupken grup kuramazsın.");
-                        p.sendMessage(ChatColor.DARK_RED + "Gruptan ayrılmak için: /grup ayrıl");
+                        p.sendMessage(ChatColor.RED + "Bir gruba mensupken grup kuramazsın.");
+                        p.sendMessage(ChatColor.RED + "Gruptan ayrılmak için: /grup ayrıl");
                         if (DataIssues.players.get(p.getUniqueId()).rank.equalsIgnoreCase("leader")) {
-                            p.sendMessage(ChatColor.DARK_RED + " !! Önemli !!  Bu işlem grubunu dağıtacaktır.");
+                            p.sendMessage(ChatColor.RED + " !! Önemli !!  Bu işlem grubunu dağıtacaktır.");
                         }
-                        return false;
+                        return true;
                     }
                 }
                 if (args[0].equalsIgnoreCase("kabul")) {
@@ -96,15 +105,15 @@ public class Main extends JavaPlugin {
                 }
                 if (args[0].equalsIgnoreCase("reddet")) {
                     if (DataIssues.hasInvite(p.getUniqueId())) {
-                        p.sendMessage(ChatColor.DARK_RED + "Davet reddedildi");
-                        Bukkit.getPlayer(DataIssues.players.get(p.getUniqueId()).invite_uid).sendMessage(ChatColor.DARK_RED + p.getName() + " Davetinizi reddetti!");
+                        p.sendMessage(ChatColor.RED + "Davet reddedildi");
+                        Bukkit.getPlayer(DataIssues.players.get(p.getUniqueId()).invite_uid).sendMessage(ChatColor.RED + p.getName() + " Davetinizi reddetti!");
                         DataIssues.players.get(p.getUniqueId()).leave();
                         return true;
                     }
                 }
                 if(args[0].equalsIgnoreCase("ayrıl")) {
                     if(DataIssues.hasGroup(p.getUniqueId())) {
-                        p.sendMessage(ChatColor.DARK_RED + "Gruptan ayrıldınız.");
+                        p.sendMessage(ChatColor.RED + "Gruptan ayrıldınız.");
                         DataIssues.players.get(p.getUniqueId()).leave();
                         return true;
                     }
@@ -129,7 +138,7 @@ public class Main extends JavaPlugin {
                         DataIssues.hasGroup(plyr.getUniqueId()) && 
                         DataIssues.players.get(p.getUniqueId()).rank.equalsIgnoreCase("leader") &&
                         DataIssues.players.get(p.getUniqueId()) == DataIssues.players.get(plyr.getUniqueId())) {
-                            plyr.sendMessage(ChatColor.DARK_RED + "Gruptan atıldın!");
+                            plyr.sendMessage(ChatColor.RED + "Gruptan atıldın!");
                             DataIssues.players.get(plyr.getUniqueId()).leave();
                             p.sendMessage(ChatColor.AQUA + args[1] + " adlı oyuncuyu grubundan attın");
                             return true;
