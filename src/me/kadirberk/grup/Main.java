@@ -36,7 +36,6 @@ public class Main extends JavaPlugin {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     if (!DataIssues.players.containsKey(p.getUniqueId())) {
                         DataIssues.players.put(p.getUniqueId(), new G_PlayerData(p.getUniqueId(), UUID.randomUUID(), null));
-                        DataIssues.players.get(p.getUniqueId()).createFile();
                         DataIssues.players.saveAndUnloadData(p.getUniqueId());
                     }
                 }
@@ -69,8 +68,11 @@ public class Main extends JavaPlugin {
                 }
                 if (args[0].equalsIgnoreCase("kur")) {
                     if (!DataIssues.hasGroup(p.getUniqueId())) {
+                        p.sendMessage("HataDenetim");
                         DataIssues.players.get(p.getUniqueId()).g_uid = p.getUniqueId();
+                        p.sendMessage("HataDenetim");
                         DataIssues.players.get(p.getUniqueId()).rank = "leader";
+                        p.sendMessage("HataDenetim");
                         p.sendMessage(ChatColor.AQUA + "Grup kuruldu!");
                         return true;
                     } else {

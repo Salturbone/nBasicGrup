@@ -57,7 +57,8 @@ public class ListenerClass implements Listener{
         if (!DataIssues.players.containsKey(player.getUniqueId())) {
             G_PlayerData plyr = new G_PlayerData(player.getUniqueId(), UUID.randomUUID(), null);
             DataIssues.players.put(player.getUniqueId(), plyr);
-            DataIssues.players.get(player.getUniqueId()).createFile();
+        } else {
+            DataIssues.players.loadData(player.getUniqueId());
         }
     }
 
