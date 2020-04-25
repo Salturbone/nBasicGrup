@@ -21,6 +21,7 @@ public class Main extends JavaPlugin {
     public static int task;
     
     public void onEnable() {
+        ekl = this;
         
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new ListenerClass(), this);
@@ -35,7 +36,8 @@ public class Main extends JavaPlugin {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     if (!DataIssues.players.containsKey(p.getUniqueId())) {
                         DataIssues.players.put(p.getUniqueId(), new G_PlayerData(p.getUniqueId(), UUID.randomUUID(), null));
-                        DataIssues.players.saveData(p.getUniqueId());
+                        DataIssues.players.get(p.getUniqueId()).createFile();
+                        DataIssues.players.saveAndUnloadData(p.getUniqueId());
                     }
                 }
             }
