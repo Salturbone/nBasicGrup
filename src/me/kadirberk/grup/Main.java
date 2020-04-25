@@ -89,6 +89,7 @@ public class Main extends JavaPlugin {
                         DataIssues.players.get(p.getUniqueId()).rank = "Member";
                         p.sendMessage(ChatColor.AQUA + "Davet kabul edildi!");
                         Bukkit.getPlayer(DataIssues.players.get(p.getUniqueId()).invite_uid).sendMessage(ChatColor.AQUA + p.getName() + " Davetinizi kabul etti!");
+                        return true;
                     }
                 }
                 if (args[0].equalsIgnoreCase("reddet")) {
@@ -96,12 +97,14 @@ public class Main extends JavaPlugin {
                         p.sendMessage(ChatColor.DARK_RED + "Davet reddedildi");
                         Bukkit.getPlayer(DataIssues.players.get(p.getUniqueId()).invite_uid).sendMessage(ChatColor.DARK_RED + p.getName() + " Davetinizi reddetti!");
                         DataIssues.players.get(p.getUniqueId()).leave();
+                        return true;
                     }
                 }
                 if(args[0].equalsIgnoreCase("ayrıl")) {
                     if(DataIssues.hasGroup(p.getUniqueId())) {
                         p.sendMessage(ChatColor.DARK_RED + "Gruptan ayrıldınız.");
                         DataIssues.players.get(p.getUniqueId()).leave();
+                        return true;
                     }
                 }
             }
@@ -114,6 +117,7 @@ public class Main extends JavaPlugin {
                             plyr.sendMessage(ChatColor.AQUA + p.getName() + " Seni grubuna davet etti.");
                             plyr.sendMessage(ChatColor.AQUA + "Katılmak için: /grup kabul");
                             plyr.sendMessage(ChatColor.AQUA + "Reddetmek için: /grup reddet");
+                            return true;
                         }
                     }
                 }
@@ -126,6 +130,7 @@ public class Main extends JavaPlugin {
                             plyr.sendMessage(ChatColor.DARK_RED + "Gruptan atıldın!");
                             DataIssues.players.get(plyr.getUniqueId()).leave();
                             p.sendMessage(ChatColor.AQUA + args[1] + " adlı oyuncuyu grubundan attın");
+                            return true;
                         }
                     }
                 }
