@@ -29,23 +29,24 @@ public class Main extends JavaPlugin {
         DataIssues.initalize();
         System.out.println("BasicGroup enabled!");
 
-        /*BukkitScheduler scheduler = getServer().getScheduler();
+        BukkitScheduler scheduler = getServer().getScheduler();
         task = scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     if (!DataIssues.players.containsKey(p.getUniqueId())) {
                         DataIssues.players.put(p.getUniqueId(), new G_PlayerData(p.getUniqueId(), UUID.randomUUID(), null));
-                        DataIssues.players.saveAndUnloadData(p.getUniqueId());
                     }
-                    DataIssues.players.saveData(p.getUniqueId());
+                    DataIssues.players.saveAndUnloadData(p.getUniqueId());
+                    DataIssues.players.loadData(p.getUniqueId());
                 }
             }
-        }, 5L, 5L);*/
+        }, 5L, 5L);
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (!DataIssues.players.containsKey(p.getUniqueId())) {
                 DataIssues.players.put(p.getUniqueId(), new G_PlayerData(p.getUniqueId(), UUID.randomUUID(), null));
-                DataIssues.players.saveData(p.getUniqueId());
+                DataIssues.players.saveAndUnloadData(p.getUniqueId());
+                DataIssues.players.loadData(p.getUniqueId());
             } else {
                 DataIssues.players.loadData(p.getUniqueId());
             }
@@ -125,6 +126,7 @@ public class Main extends JavaPlugin {
                     for (Player plyr : Bukkit.getOnlinePlayers()) {
                         if (plyr.getName().equalsIgnoreCase(args[1]) &&
                          !DataIssues.hasGroup(plyr.getUniqueId())) {
+                            DataIssues.players.get(plyr.getUniqueId()).invite_uid = p.getUniqueId();
                             plyr.sendMessage(ChatColor.AQUA + p.getName() + " Seni grubuna davet etti.");
                             plyr.sendMessage(ChatColor.AQUA + "Katılmak için: /grup kabul");
                             plyr.sendMessage(ChatColor.AQUA + "Reddetmek için: /grup reddet");

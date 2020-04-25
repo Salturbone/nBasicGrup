@@ -30,7 +30,7 @@ public class DataIssues {
 
     public static boolean hasInvite(UUID uid) {
         for (G_PlayerData gpd : players.values()) {
-            if (players.get(uid).invite_uid == gpd.uid) {
+            if (players.get(uid).invite_uid == gpd.g_uid) {
                 return true;
             }
         }
